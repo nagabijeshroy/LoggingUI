@@ -1,0 +1,187 @@
+﻿@model PagedList.IPagedList<Logging_UI.Log>
+@{
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+<div id="displayData"></div>
+@if (Model.Count() != 0)
+{
+    <div class="pagination">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber))
+        of @Model.PageCount
+        @if (Model.HasPreviousPage)
+        {
+            @Html.ActionLink("<<", "LogData", new { page = 1 });
+            @Html.Raw(" ");
+            @Html.ActionLink("< Prev", "LogData", new { Page = Model.PageNumber - 1 });
+        }
+        else
+        {
+            @:<<
+            @Html.Raw(" ");
+            @:< Prev
+            }
+        @if (Model.HasNextPage)
+        {
+            @Html.ActionLink("> Next", "LogData", new { page = Model.PageNumber + 1 });
+            @Html.Raw(" ");
+            @Html.ActionLink(">>", "LogData", new { Page = Model.PageCount });
+        }
+        else
+        {
+            @:Next >
+            @Html.Raw(" ");
+            @:>>
+       }
+    </div>
+    <div id="showTable">
+        <table>
+            <tr>
+                <th>
+                    
+                    @Html.ActionLink("Event ID", "LogData",
+                new { sortOrder = "EventID", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Priority", "LogData",
+                new { sortOrder = "Priority", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Severity", "LogData",
+                new { sortOrder = "Severity", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Title", "LogData",
+                new { sortOrder = "Title", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Timestamp", "LogData",
+                new { sortOrder = "Timestamp", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Machine Name", "LogData",
+                new { sortOrder = "MachineName", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("App Domain Name", "LogData",
+                new { sortOrder = "AppDomainName", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Process ID", "LogData",
+                new { sortOrder = "ProcessID", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Process Name", "LogData",
+                new { sortOrder = "ProcessName", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Thread Name", "LogData",
+                new { sortOrder = "ThreadName", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    
+                    @Html.ActionLink("Win32Thread Id", "LogData",
+                new { sortOrder = "Win32ThreadId", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Message)
+                    @*@Html.ActionLink("Message", "LogData",
+                new { sortOrder = "Message", CurrentSort = ViewBag.CurrentSort })*@
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FormattedMessage)
+                    @*@Html.ActionLink("Formatted Message", "LogData",
+                new { sortOrder = "FormattedMessage", CurrentSort = ViewBag.CurrentSort })*@
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Priority)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Severity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Timestamp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MachineName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AppDomainName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProcessID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProcessName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThreadName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Win32ThreadId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FormattedMessage)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="pagination">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber))
+        of @Model.PageCount
+        @if (Model.HasPreviousPage)
+        {
+            @Html.ActionLink("<<", "LogData", new { page = 1 });
+            @Html.Raw(" ");
+            @Html.ActionLink("< Prev", "LogData", new { Page = Model.PageNumber - 1 });
+        }
+        else
+        {
+            @:<<
+            @Html.Raw(" ");
+            @:< Prev
+            }
+        @if (Model.HasNextPage)
+        {
+            @Html.ActionLink("> Next", "LogData", new { page = Model.PageNumber + 1 });
+            @Html.Raw(" ");
+            @Html.ActionLink(">>", "LogData", new { Page = Model.PageNumber - Model.PageCount });
+        }
+        else
+        {
+            @:Next >
+            @Html.Raw(" ");
+            @:>>
+            }
+    </div>
+
+}
+else
+{
+    <h4>No Match Found for the Search !!</h4>
+}
+<link rel="stylesheet" type="text/css" href="../../CSS/style.css" />

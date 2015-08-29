@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    @RenderSection("head", false)
+    <title>
+        App Config Logger
+    </title>
+    <link rel="icon"
+          type="image/png"
+          href="../../Images/s_poRCNA.png">
+    <script type="text/javascript" src="../JS/jquery.min.js"></script>
+    <script src="../JS/jquery-ui.js" type="text/javascript"></script>
+    <script src="../JS/selectivizr-min.js" type="text/javascript"></script>
+    <script src="../JS/selectivizr.js" type="text/javascript"></script>
+    <script src="../JS/json_sans_eval.js" type="text/javascript"></script>
+    <link href="../../CSS/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../CSS/style.css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$("#submitButton").click(function () {
+            //    $('#displayData').html('<img src="http://preloaders.net/preloaders/287/Filling%20broken%20ring.gif"> loading...');
+            //    $.post('Home/LogData', $("#form1").serialize(), function (returnText) {
+            //        $("#displayData").html(returnText);
+            //    });
+            //});
+            $(".datefield").datepicker({ dateFormat: 'mm/dd/yy', changeYear: true });
+        });
+    </script>
+</head>
+<body>
+   
+    <form id="form1" action="/Home/LogData" method="post">
+        <div id="Main_Page">
+            <div id="header">
+                <img src="../Images/s_poRCNA.png" alt="logo" height="75" width="75" />App Config Logger
+            </div>
+            <div id="Content">
+                <div id="Button_Menu">
+
+                    <span>
+                        Severity:
+                        <select name="Severity">
+                            <option value="All">All Severities</option>
+                            <option value="2">2</option>
+                            <option value="8">8</option>
+                            <option value="Critical">Critical</option>
+                            <option value="Error">Error</option>
+                            <option value="Information">Information</option>
+                            <option value="Verbose">Verbose</option>
+                            <option value="Warning">Warning</option>
+                        </select>
+                    </span>
+                    <span>
+                        Title:<input type="text" name="title" id="title" />
+                    </span>
+                    <span>
+                        Machine Name:<input type="text" name="machineName" id="machineName" />
+                    </span>
+                    <span>
+                        From Date:<input type="text" name="FromDate" id="FromDate" class="datefield" />
+                    </span>
+                    <span>
+                        To Date:<input type="text" name="ToDate" id="ToDate" class="datefield" />
+                    </span>
+                    <span>
+                        <input type="submit" id="submitButton" value="Search" /><br />
+                    </span>
+                </div>
+                @RenderBody()
+            </div>
+        </div>
+    </form>
+    
+</body>
+</html>

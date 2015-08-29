@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LoggingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoryLog">
+    <Key>
+      <PropertyRef Name="CategoryLogID" />
+    </Key>
+    <Property Name="CategoryLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="LogID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="LogID" />
+    </Key>
+    <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventID" Type="int" />
+    <Property Name="Priority" Type="int" Nullable="false" />
+    <Property Name="Severity" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Timestamp" Type="datetime" Nullable="false" />
+    <Property Name="MachineName" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="AppDomainName" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="ProcessID" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ProcessName" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="ThreadName" Type="nvarchar" MaxLength="512" />
+    <Property Name="Win32ThreadId" Type="nvarchar" MaxLength="128" />
+    <Property Name="Message" Type="nvarchar" MaxLength="1500" />
+    <Property Name="FormattedMessage" Type="ntext" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_CategoryLog_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="CategoryLog">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CategoryLog_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="1" />
+    <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="LogID" />
+      </Principal>
+      <Dependent Role="CategoryLog">
+        <PropertyRef Name="LogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LoggingModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="CategoryLog" EntitySet="CategoryLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CategoryLog_Log" Association="Self.FK_CategoryLog_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="CategoryLog" EntitySet="CategoryLog" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
